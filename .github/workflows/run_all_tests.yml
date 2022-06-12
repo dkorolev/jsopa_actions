@@ -20,7 +20,6 @@ jobs:
       - name: 'Do the rest.'
         id: run
         run: |
-          ls -R
-          ls -R /
           ls -R jsopa
           ls -R node_modules_mocha_chai_tar_gz
+          (cd node_modules_mocha_chai_tar_gz; tar xzvf node_modules.tar.gz)
