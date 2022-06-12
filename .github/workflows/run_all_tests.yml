@@ -1,0 +1,26 @@
+name: Run all tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_looknsight_be:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check out JSOPA'
+        uses: actions/checkout@v3
+        with:
+          repository: dkorolev/jsopa
+          path: jsopa
+      - name: 'Check out node_modules'
+        uses: actions/checkout@v3
+        with:
+          repository: dkorolev/node_modules_mocha_chai_tar_gz
+          path: node_modules_mocha_chai_tar_gz
+      - name: 'Do the rest.'
+        id: run
+        run: |
+          ls -R
+          ls -R /
+          ls -R jsopa
+          ls -R node_modules_mocha_chai_tar_gz
