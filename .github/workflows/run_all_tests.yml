@@ -25,7 +25,7 @@ jobs:
         id: jsopa_container
         run: |
           (cd jsopa/docker; docker build .)
-          echo ::set-output name=JSOPA_CONTAINER_ID::(cd jsopa/docker; docker build -q .)
+          echo ::set-output name=JSOPA_CONTAINER_ID::$(cd jsopa/docker; docker build -q .)
       - name: 'Use the JSOPA container'
         run: |
           export JSOPA_CONTAINER_ID=${{ steps.jsopa_container.outputs.JSOPA_CONTAINER_ID }}
