@@ -29,4 +29,4 @@ jobs:
       - name: 'Use the JSOPA container'
         run: |
           export JSOPA_CONTAINER_ID=${{ steps.jsopa_container.outputs.JSOPA_CONTAINER_ID }}
-          docker run $(JSOPA_CONTAINER_ID) version
+          docker run $JSOPA_CONTAINER_ID version
