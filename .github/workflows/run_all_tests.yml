@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_looknsight_be:
+  run_all_tests:
     runs-on: ubuntu-latest
     steps:
       - name: 'Check out JSOPA'
@@ -12,14 +12,18 @@ jobs:
         with:
           repository: dkorolev/jsopa
           path: jsopa
-      - name: 'Check out node_modules'
+      - name: 'Check out `node_modules`'
         uses: actions/checkout@v3
         with:
           repository: dkorolev/node_modules_mocha_chai_tar_gz
           path: node_modules_mocha_chai_tar_gz
-      - name: 'Do the rest.'
-        id: run
+      - name: 'Unpack `node_modules`'
         run: |
           ls -R jsopa
           ls -R node_modules_mocha_chai_tar_gz
-          (cd node_modules_mocha_chai_tar_gz; tar xzvf node_modules.tar.gz)
+          (cd node_modules_mocha_chai_tar_gz; tar xzf node_modules.tar.gz; mv node_modules ../jsopa/docker/src)
+      - name: 'Build the JSOPA container'
+        run: |
+          (cd jsopa/docker; docker build .)
+          echo 'HERE'
+          (cd jsopa/docker; docker build -q .)
