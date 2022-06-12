@@ -26,7 +26,15 @@ jobs:
         run: |
           (cd jsopa/docker; docker build .)
           echo ::set-output name=JSOPA_CONTAINER_ID::$(cd jsopa/docker; docker build -q .)
-      - name: 'Use the JSOPA container'
+      - name: 'Generate all `golden`-s'
         run: |
           export JSOPA_CONTAINER_ID=${{ steps.jsopa_container.outputs.JSOPA_CONTAINER_ID }}
-          docker run $JSOPA_CONTAINER_ID version
+          (cd jsopa; ./gen_all_goldens.sh)
+      - name: 'Generate all JavaScript policies'
+        run: |
+          export JSOPA_CONTAINER_ID=${{ steps.jsopa_container.outputs.JSOPA_CONTAINER_ID }}
+          (cd jsopa; ./gen_all_goldens.sh)
+      - name: 'Run all tests'
+        run: |
+          export JSOPA_CONTAINER_ID=${{ steps.jsopa_container.outputs.JSOPA_CONTAINER_ID }}
+          (cd jsopa; ./run_all_tests_in_docker.sh)
